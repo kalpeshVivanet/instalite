@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">1747800295659362</string>
+    <string name="fb_login_protocol_scheme">fb1747800295659362</string>
+    <string name="facebook_client_token">80e08bbbc0b82430166f2d7a596a8727</string>
+    <string name="app_name">"instalite"</string>
+</resources>
+
+
