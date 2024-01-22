@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:instalite/main/home.dart';
+import 'package:instalite/main/reel_post.dart';
 
 import 'data/database.dart';
 import 'login/login_page.dart';
+import 'main/add_post.dart';
 import 'main/my_post.dart';
 import 'model/user_detail.dart';
 
@@ -48,7 +50,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     const Home(),
     Search(),
     AddPost(),
-    Reel(),
+    ReelPost(),
     MyPost()
   ];
 
@@ -124,24 +126,24 @@ class Search extends StatelessWidget {
   }
 }
 
-class AddPost extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const Drawer(),
-      appBar: AppBar(),
-      body: const Center(
-        child: Text('Settings Page'),
-      ),
-    );
-  }
-}
+// class AddPost extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       drawer: const Drawer(),
+//       appBar: AppBar(),
+//       body: const Center(
+//         child: Text('Settings Page'),
+//       ),
+//     );
+//   }
+// }
 
-class Reel extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Settings Page'),
-    );
-  }
-}
+// class Reel extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(
+//       child: Text('Settings Page'),
+//     );
+//   }
+// }

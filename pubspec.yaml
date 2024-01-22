@@ -50,6 +50,15 @@ dependencies:
   audioplayers: ^5.2.1
   page_transition: ^2.1.0
   cached_network_image: ^3.3.1
+  camera: ^0.10.5+9
+  firebase_storage: ^11.6.0
+  image: ^4.1.4
+  image_picker: ^1.0.7
+  speech_to_text: ^6.5.1
+  lindi_sticker_widget: ^0.1.1
+  image_gallery_saver: ^2.0.3
+  screenshot: ^2.1.0
+  permission_handler: ^11.0.1
 
 dev_dependencies:
   flutter_test:

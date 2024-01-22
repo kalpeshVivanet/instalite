@@ -58,7 +58,10 @@ class FeedPost extends StatelessWidget {
   Future<List<Map<String, dynamic>>> fetchPostData() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await FirebaseFirestore.instance.collection("post").get();
+          await FirebaseFirestore.instance
+              .collection("post")
+              .orderBy("date", descending: true)
+              .get();
 
       List<Map<String, dynamic>> postDataList =
           querySnapshot.docs.map((doc) => doc.data()).toList();
