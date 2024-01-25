@@ -56,11 +56,16 @@ class AuthenticationWrapper extends StatelessWidget {
           if (user == null) {
             return const LoginPage();
           } else {
-            return const NavigationHomeScreen();
+            return NavigationHomeScreen();
           }
         }
         return const CircularProgressIndicator();
       },
     );
   }
+}
+
+Future<Uint8List> loadFromAsset(String key) async {
+  final ByteData byteData = await rootBundle.load(key);
+  return byteData.buffer.asUint8List();
 }

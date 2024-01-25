@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instalite/utilites/constant.dart';
+import '../image_editor/home_page.dart';
 import '../model/story.dart';
 import '../model/user.dart';
 import 'feed_post.dart';
@@ -99,6 +100,12 @@ class Home extends StatelessWidget {
                     icon: const Icon(FontAwesomeIcons.facebookMessenger),
                     onPressed: () {
                       // Handle direct message button press
+
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return IndexPage();
+                      }));
+                      //
                     },
                   ),
                   spacewt5

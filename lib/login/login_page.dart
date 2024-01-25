@@ -165,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return const NavigationHomeScreen();
+                                          return NavigationHomeScreen();
                                         }));
                                       } else {
                                         user = auth.currentUser!;
@@ -296,7 +296,7 @@ class _LoginPageState extends State<LoginPage> {
                                       .signInWithCredential(credential);
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return const NavigationHomeScreen();
+                                    return NavigationHomeScreen();
                                   }));
                                   print('User signed in with Facebook');
                                   print(credential);

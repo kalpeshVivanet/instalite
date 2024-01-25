@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, must_be_immutable
+// ignore_for_file: library_private_types_in_public_api, must_be_immutable, use_build_context_synchronously
 
 import 'dart:async';
 import 'dart:io';
@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
@@ -23,6 +24,43 @@ class AddPost extends StatefulWidget {
 class _AddPostState extends State<AddPost> {
   late File _imageFile;
   img.Image? _image;
+
+  Future<void> _pickImage() async {
+    try {
+      final pickedFile =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        // File? compressedImage = await compressImage(File(pickedFile.path));
+
+        setState(() {
+          // _imageFile = compressedImage!;
+          _imageFile = File(pickedFile.path);
+          _image = img.decodeImage(_imageFile.readAsBytesSync())!;
+        });
+        setState(() {});
+      }
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return ImageEdit(_imageFile, _image!);
+      }));
+    } catch (e) {
+      print('Error picking image: $e');
+    }
+  }
+
+  static Future<File?> compressImage(File file) async {
+    String targetPath = file.path.replaceAll('.jpg', '_compressed.jpg');
+    var result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      targetPath,
+      quality: 40,
+    );
+    if (result != null) {
+      return File(result.path);
+    } else {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,24 +83,6 @@ class _AddPostState extends State<AddPost> {
       ),
     );
   }
-
-  Future<void> _pickImage() async {
-    final XFile? image =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      setState(() {
-        _imageFile = File(image.path);
-        _image = img.decodeImage(_imageFile.readAsBytesSync())!;
-      });
-    }
-    // ignore: use_build_context_synchronously
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ImageEdit(_imageFile, _image!);
-    }));
-  }
-
-//
 }
 
 class ImageEdit extends StatefulWidget {
@@ -185,7 +205,7 @@ class _ImageEditState extends State<ImageEdit> {
       "post": imageUrl,
       "date": Timestamp.now(),
     });
-    Get.to(() => const NavigationHomeScreen(), transition: Transition.zoom);
+    Get.to(() => NavigationHomeScreen(), transition: Transition.zoom);
     setState(() {
       isPressed = false;
     });
