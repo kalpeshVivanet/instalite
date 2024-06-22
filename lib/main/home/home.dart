@@ -3,17 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instalite/utilites/constant.dart';
-import '../image_editor/home_page.dart';
-import '../model/story.dart';
-import '../model/user.dart';
-import 'feed_post.dart';
+import '../../image_editor/home_page.dart';
+import '../../model/story.dart';
+import '../../model/user.dart';
+import '../../main_screen.dart';
+import '../feed_post.dart';
+
 import 'story/page/stories_post.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  bool isLoadingStories = true;
+  @override
+  void initState() {
+    super.initState();
+    _loadStories();
+  }
+
+  void _loadStories() {
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoadingStories = false;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    showProfilePicture;
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();
@@ -101,10 +124,10 @@ class Home extends StatelessWidget {
                     onPressed: () {
                       // Handle direct message button press
 
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return IndexPage();
-                      }));
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return IndexPage();
+                      // }));
                       //
                     },
                   ),
@@ -116,11 +139,15 @@ class Home extends StatelessWidget {
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Container(
-              decoration: BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Colors.white),
               child: Column(
                 children: [
-                  StoriesPost(),
-                  FeedPost(),
+                  userDetailData.profilePicture == ""
+                      ? isLoadingStories
+                          ? const SizedBox()
+                          : StoriesPost()
+                      : StoriesPost(),
+                  const FeedPost(),
                 ],
               ),
             ),

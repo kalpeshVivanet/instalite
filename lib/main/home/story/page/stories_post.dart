@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:instalite/navigation_home_screen.dart';
+import 'package:instalite/main_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../../data/database.dart';
-import '../../../model/user.dart';
+import '../../../../data/database.dart';
+import '../../../../model/user.dart';
 
 import 'story_page.dart';
 
@@ -14,7 +14,6 @@ class StoriesPost extends StatelessWidget {
   String profilePicture = userDetailData.profilePicture;
   @override
   Widget build(BuildContext context) {
-    print("sssssss$profilePicture");
     return StreamBuilder<List<UserStory>>(
       stream: DataBaseEvent().getStoryStream(),
       builder: (context, snapshot) {
@@ -47,56 +46,34 @@ class StoriesPost extends StatelessWidget {
                                 width: 2.0,
                               ),
                             ),
-                            child:
-                                // CachedNetworkImage(
-                                //     // memCacheHeight: 20,
-                                //     imageUrl: profilePicture,
-                                //     imageBuilder: (context, imageProvider) =>
-                                //         Padding(
-                                //           padding: const EdgeInsets.all(2.0),
-                                //           child: Container(
-                                //             // width: 300,
-                                //             // height: 150,
-                                //             decoration: BoxDecoration(
-                                //               borderRadius:
-                                //                   BorderRadius.circular(50),
-                                //               image: DecorationImage(
-                                //                   image: imageProvider,
-                                //                   fit: BoxFit.cover),
-                                //             ),
-                                //           ),
-                                //         ),
-                                //     placeholder: (context, url) => SizedBox(
-                                //           // width: 400,
-                                //           // height: 150,
-                                //           child: Padding(
-                                //             padding: const EdgeInsets.all(2.0),
-                                //             child: Container(
-                                //               // width: 300,
-                                //               // height: 150,
-                                //               decoration: BoxDecoration(
-                                //                 borderRadius:
-                                //                     BorderRadius.circular(50),
-                                //                 image: DecorationImage(
-                                //                     image: AssetImage(
-                                //                         "assets/images/user.png"),
-                                //                     fit: BoxFit.cover),
-                                //               ),
-                                //             ),
-                                //           ),
-                                //         ),
-                                //     //Image.asset("assets/images/user.png")),
-                                //     errorWidget: (context, url, error) =>
-                                //         const Icon(Icons.error)),
-                                Padding(
+                            child: Padding(
                               padding: EdgeInsets.all(2.0),
-                              child: CircleAvatar(
-                                  radius: 30.0,
-                                  backgroundImage: NetworkImage(
-                                      userDetailData.profilePicture)
-                                  // NetworkImage(
-                                  //     "https://wallpapercave.com/wp/wp2568544.jpg"),
+                              child: Container(
+                                  clipBehavior: Clip.antiAlias,
+                                  width: 30.0,
+                                  height: 30.0,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
                                   ),
+                                  child: CachedNetworkImage(
+                                    imageUrl: userDetailData.profilePicture,
+                                    placeholder: (context, url) => Container(
+                                      color: const Color.fromARGB(
+                                          255, 239, 239, 239),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      'assets/images/user.png',
+                                      color: Colors.white.withOpacity(0.2),
+                                    ),
+                                  )),
+                              // CircleAvatar(
+                              //     radius: 30.0,
+                              //     backgroundImage: NetworkImage(
+                              //         userDetailData.profilePicture)
+                              //     // NetworkImage(
+                              //     //     "https://wallpapercave.com/wp/wp2568544.jpg"),
+                              //     ),
                             ),
                           ),
                           Container(

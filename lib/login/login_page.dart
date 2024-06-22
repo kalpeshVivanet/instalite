@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:instalite/navigation_home_screen.dart';
+import 'package:instalite/main_screen.dart';
 import '../utilites/constant.dart';
 import 'forgot_password.dart';
 import 'sign_up.dart';
@@ -165,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return NavigationHomeScreen();
+                                          return MainScreen();
                                         }));
                                       } else {
                                         user = auth.currentUser!;
@@ -296,7 +296,7 @@ class _LoginPageState extends State<LoginPage> {
                                       .signInWithCredential(credential);
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return NavigationHomeScreen();
+                                    return MainScreen();
                                   }));
                                   print('User signed in with Facebook');
                                   print(credential);

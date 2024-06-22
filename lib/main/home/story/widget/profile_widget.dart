@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/user.dart';
+import '../../../../model/user.dart';
 
 class ProfileWidget extends StatelessWidget {
   final UserStory user;

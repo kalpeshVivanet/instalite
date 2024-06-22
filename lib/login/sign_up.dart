@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:instalite/navigation_home_screen.dart';
+import 'package:instalite/main_screen.dart';
 import '../utilites/constant.dart';
 import 'login_page.dart';
 
@@ -115,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                               .signInWithCredential(credential);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return NavigationHomeScreen();
+                            return MainScreen();
                           }));
                           print('User signed in with Facebook');
                         } else {
@@ -600,7 +600,7 @@ class _SignUpState extends State<SignUp> {
 //                               .signInWithCredential(credential);
 //                           Navigator.push(context,
 //                               MaterialPageRoute(builder: (context) {
-//                             return NavigationHomeScreen();
+//                             return MainScreen();
 //                           }));
 //                           print('User signed in with Facebook');
 //                         } else {

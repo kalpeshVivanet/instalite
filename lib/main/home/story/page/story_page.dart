@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/user.dart';
+import '../../../../model/user.dart';
 
 import '../widget/story_widget.dart';
 import 'stories_post.dart';

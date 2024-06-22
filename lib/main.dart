@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:instalite/login/sign_up.dart';
-import 'package:instalite/navigation_home_screen.dart';
+import 'package:instalite/main_screen.dart';
 import 'package:instalite/utilites/constant.dart';
 
 import 'firebase_options.dart';
@@ -56,7 +56,7 @@ class AuthenticationWrapper extends StatelessWidget {
           if (user == null) {
             return const LoginPage();
           } else {
-            return NavigationHomeScreen();
+            return MainScreen();
           }
         }
         return const CircularProgressIndicator();

@@ -1,13 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instalite/model/user_detail.dart';
 import 'package:instalite/utilites/constant.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../data/database.dart';
 import '../login/login_page.dart';
-import '../navigation_home_screen.dart';
+import '../main_screen.dart';
 
 class MyPost extends StatefulWidget {
   MyPost({super.key});
@@ -56,11 +58,7 @@ class _MyPostState extends State<MyPost> {
                   spacewt5,
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        pageTransition(context),
-                      );
-                      // Scaffold.of(context).openEndDrawer();
+                      showBottomSheet();
                     },
                     icon: const Icon(
                       Icons.menu,
@@ -81,12 +79,37 @@ class _MyPostState extends State<MyPost> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          CircleAvatar(
-                            radius: 40.0,
-                            backgroundImage: NetworkImage(
-                              userDetailData.profilePicture,
+                          Container(
+                            clipBehavior: Clip.antiAlias,
+                            width: 80.0,
+                            height: 80.0,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
                             ),
+                            child: showProfilePicture
+                                ? CachedNetworkImage(
+                                    imageUrl: userDetailData.profilePicture,
+                                    placeholder: (context, url) => Container(
+                                      color: const Color.fromARGB(
+                                          255, 239, 239, 239),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      'assets/images/user.png',
+                                      color: Colors.white.withOpacity(0.2),
+                                    ),
+                                  )
+                                : Container(
+                                    color: const Color.fromARGB(
+                                        255, 239, 239, 239),
+                                  ),
                           ),
+                          // CircleAvatar(
+                          //   radius: 40.0,
+                          //   backgroundImage: NetworkImage(
+                          //     userDetailData.profilePicture,
+                          //   ),
+                          // ),
                           const Column(
                             children: [
                               Text(
@@ -401,70 +424,49 @@ class _MyPostState extends State<MyPost> {
     );
   }
 
-  PageTransition<dynamic> pageTransition(BuildContext context) {
-    return PageTransition(
-      type: PageTransitionType.bottomToTop,
-      duration: const Duration(milliseconds: 250),
-      child: Scaffold(
-        backgroundColor: Colors.black.withOpacity(0.5),
-        body: Dismissible(
-          key: const Key("dismiss_key"),
-          direction: DismissDirection.down,
-          onDismissed: (direction) {
-            Navigator.pop(context);
-          },
-          behavior: HitTestBehavior.translucent,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20))),
-              height: MediaQuery.of(context).size.height * 0.76,
-              width: MediaQuery.of(context).size.width,
-              // alignment: Alignment.bottomCenter,
-
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  spaceht10,
-                  Container(
-                    clipBehavior: Clip.antiAlias,
-                    height: 4,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 96, 96, 96),
-                        borderRadius: BorderRadius.horizontal(
-                            right: Radius.circular(100),
-                            left: Radius.circular(100))),
-                    margin: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).size.width * 0.44),
-                  ),
-                  spaceht30,
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("Settings"),
-                    trailing: Text("dd"),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        auth.signOut();
-                        // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        //   return OTPScreen();
-                        // }));
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const LoginPage();
-                        }));
-                      },
-                      child: const Text("Log out"))
-                ],
-              ),
+  void showBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isDismissible: true, // Enable outside touch to close
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      backgroundColor: Colors.white,
+      builder: (context) {
+        return Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            spaceht10,
+            Container(
+              clipBehavior: Clip.antiAlias,
+              height: 4,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 96, 96, 96),
+                  borderRadius: BorderRadius.horizontal(
+                      right: Radius.circular(100), left: Radius.circular(100))),
+              margin: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.44),
             ),
-          ),
-        ),
-      ),
+            spaceht30,
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text("Log out"),
+              onTap: () {
+                auth.signOut();
+                // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //   return OTPScreen();
+                // }));
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const LoginPage();
+                }));
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

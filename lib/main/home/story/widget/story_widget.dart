@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'package:story_view/story_view.dart';
 
-import '../../../model/story.dart';
-import '../../../model/user.dart';
+import '../../../../model/story.dart';
+import '../../../../model/user.dart';
 
 import '../page/stories_post.dart';
 
@@ -39,7 +39,7 @@ class _StoryWidgetState extends State<StoryWidget> {
           storyItems.add(StoryItem.pageImage(
             url: story.url!,
             controller: controller,
-            caption: story.caption,
+            caption: Text(story.caption),
             duration: Duration(
               milliseconds: (story.duration * 1000).toInt(),
             ),
